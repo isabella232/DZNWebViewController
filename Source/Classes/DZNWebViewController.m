@@ -221,17 +221,17 @@ static char DZNWebViewControllerKVOContext = 0;
     }
     
     if ((self.supportedWebNavigationTools & DZNWebNavigationToolForward) > 0 || self.supportsAllNavigationTools) {
-        if (!DZN_IS_IPAD) [items addObject:flexibleSpace];
+        [items addObject:flexibleSpace];
         [items addObject:self.forwardBarItem];
     }
     
     if ((self.supportedWebNavigationTools & DZNWebNavigationToolStopReload) > 0 || self.supportsAllNavigationTools) {
-        if (!DZN_IS_IPAD) [items addObject:flexibleSpace];
+        [items addObject:flexibleSpace];
         [items addObject:self.stateBarItem];
     }
     
     if (self.supportedWebActions > 0) {
-        if (!DZN_IS_IPAD) [items addObject:flexibleSpace];
+        [items addObject:flexibleSpace];
         [items addObject:self.actionBarItem];
     }
     
@@ -512,12 +512,7 @@ static char DZNWebViewControllerKVOContext = 0;
 
 - (void)configureToolBars
 {
-    if (DZN_IS_IPAD) {
-        self.navigationItem.rightBarButtonItems = [[[self navigationToolItems] reverseObjectEnumerator] allObjects];
-    }
-    else {
-        [self setToolbarItems:[self navigationToolItems]];
-    }
+    [self setToolbarItems:[self navigationToolItems]];
     
     self.toolbar = self.navigationController.toolbar;
     self.navigationBar = self.navigationController.navigationBar;
@@ -533,7 +528,7 @@ static char DZNWebViewControllerKVOContext = 0;
         [self.navigationBar addObserver:self forKeyPath:@"alpha" options:NSKeyValueObservingOptionNew context:&DZNWebViewControllerKVOContext];
     }
 
-    if (!DZN_IS_IPAD && self.navigationController.toolbarHidden && self.toolbarItems.count > 0) {
+    if (self.navigationController.toolbarHidden && self.toolbarItems.count > 0) {
         [self.navigationController setToolbarHidden:NO];
     }
 }
