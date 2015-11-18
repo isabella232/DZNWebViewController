@@ -143,6 +143,13 @@ static char DZNWebViewControllerKVOContext = 0;
 	[super viewDidDisappear:animated];
     
     [self.webView stopLoading];
+    
+    if (self.hideBarsWithGestures) {
+        [self.navigationBar removeObserver:self forKeyPath:@"hidden" context:&DZNWebViewControllerKVOContext];
+        [self.navigationBar removeObserver:self forKeyPath:@"center" context:&DZNWebViewControllerKVOContext];
+        [self.navigationBar removeObserver:self forKeyPath:@"alpha" context:&DZNWebViewControllerKVOContext];
+    }
+    [self.webView removeObserver:self forKeyPath:@"loading" context:&DZNWebViewControllerKVOContext];
 }
 
 
@@ -846,13 +853,6 @@ static char DZNWebViewControllerKVOContext = 0;
 
 - (void)dealloc
 {
-    if (self.hideBarsWithGestures) {
-        [self.navigationBar removeObserver:self forKeyPath:@"hidden" context:&DZNWebViewControllerKVOContext];
-        [self.navigationBar removeObserver:self forKeyPath:@"center" context:&DZNWebViewControllerKVOContext];
-        [self.navigationBar removeObserver:self forKeyPath:@"alpha" context:&DZNWebViewControllerKVOContext];
-    }
-    [self.webView removeObserver:self forKeyPath:@"loading" context:&DZNWebViewControllerKVOContext];
-    
     _backwardBarItem = nil;
     _forwardBarItem = nil;
     _stateBarItem = nil;
